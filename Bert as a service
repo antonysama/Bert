@@ -2,8 +2,12 @@ pip install tensorflow-gpu
 pip install -U bert-serving-server bert-serving-client
 gedit bert.py  # see below
 python bert.py -model_dir /home/antony/environments/e/L-12_H-768_A-12/ -num_worker=4
-#The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
-#https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity
+
+#Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
+#https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity:
+
+import logging
+logging.getLogger("tensorflow").setLevel(logging.ERROR)
 
 #bert.py (script)
 import sys
