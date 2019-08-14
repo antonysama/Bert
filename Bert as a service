@@ -21,3 +21,8 @@ if __name__ == '__main__':
     server = BertServer(args)
     server.start()
     server.join()
+
+References & Exercises:
+# bert (server needs tf)
+https://bert-as-service.readthedocs.io/en/latest/tutorial/index.html (tutorials)
+https://github.com/hanxiao/bert-as-service/blob/master/README.md (other bert e.g.s)
