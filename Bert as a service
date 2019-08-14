@@ -25,10 +25,18 @@ if __name__ == '__main__':
 #Exercises:
 #on a new tab
 python 
+
 #imports
 import tensorflow
 import numpy as np
+from termcolor import colored
+prefix_q = '##### **Q:** '
+topk = 5
 
+with open('README.md') as fp:
+    questions = [v.replace(prefix_q, '').strip() for v in fp if v.strip() and v.startswith(prefix_q)]
+    print('%d questions loaded, avg. len of %d' % (len(questions), np.mean([len(d.split()) for d in questions])))
+    
 with BertClient(ip='192.168.0.10') as bc:
     doc_vecs = bc.encode(questions)
 
