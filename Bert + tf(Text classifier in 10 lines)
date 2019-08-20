@@ -9,13 +9,12 @@ pip install wget
 
 Python
 
+import tensorflow as tf
 from bert_text import run_on_dfs
 import pickle
 import wget
 
-import tensorflow as tf
 config = tf.ConfigProto()
-
 # Allow growth: (more flexible)
 #config.gpu_options.allow_growth = True 
 #session = tf.Session(config=config)
