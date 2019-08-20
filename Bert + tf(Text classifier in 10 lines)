@@ -1,4 +1,5 @@
 #Shell
+pip install tensorflow-gpu  # pip install tf-nightly-gpu 
 pip install bert-text
 pip install wget
 
