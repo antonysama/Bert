@@ -29,7 +29,7 @@ myparam = {
         "DATA_COLUMN": "text",
         "LABEL_COLUMN": "sentiment",
         "LEARNING_RATE": 2e-5,
-        "NUM_TRAIN_EPOCHS":10
+        "NUM_TRAIN_EPOCHS":3
     }
     
 result, estimator = run_on_dfs(train, test, **myparam)
