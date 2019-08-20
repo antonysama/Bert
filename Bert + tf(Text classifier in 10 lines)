@@ -1,10 +1,14 @@
 #Shell
 cd ~/environments/g
+virtualenv -p python py-bert
+source py-bert/bin/activate
+
 pip install tensorflow-gpu  # pip install tf-nightly-gpu 
 pip install bert-text
 pip install wget
 
-#Python
+Python
+
 from bert_text import run_on_dfs
 import pickle
 import wget
