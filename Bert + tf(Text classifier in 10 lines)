@@ -24,7 +24,7 @@ with open("imdb-sample.pickle", 'rb') as f:
     train, test = pickle.load(f)
 
  train = train.sample(len(train))
- myparam = {
+myparam = {
         "DATA_COLUMN": "text",
         "LABEL_COLUMN": "sentiment",
         "LEARNING_RATE": 2e-5,
