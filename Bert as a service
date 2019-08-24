@@ -48,6 +48,7 @@ with BertClient(ip='192.168.0.10') as bc:
 
 # References:
 # Staring server & client: https://buildmedia.readthedocs.org/media/pdf/bert-as-service/latest/bert-as-service.pdf
-# Tutorials: https://bert-as-service.readthedocs.io/en/latest/tutorial/token-embed.html
+# Tutorials: https://github.com/antonysama/bert-as-service
+# ...more tutorials: https://bert-as-service.readthedocs.io/en/latest/tutorial/token-embed.html
 # Repo: https://github.com/google-research/bert
 # Examples: https://github.com/hanxiao/bert-as-service/blob/master/README.md
