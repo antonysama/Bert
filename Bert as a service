@@ -1,20 +1,22 @@
-pip install tensorflow-gpu
-pip install -U bert-serving-server bert-serving-client
-gedit bert.py  # first time only, see below
-python bert.py -model_dir /home/antony/environments/e/L-12_H-768_A-12/ -num_worker=4
+#pip install tensorflow-gpu
+#pip install -U bert-serving-server bert-serving-client
+# After all installs run...
+# python example8.py -model_dir=uncased_L-12_H-768_A-12
 
 #Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
 #https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity:
 
 
-#bert.py (script)
+#bert.py 
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 import sys
-
+import tensorflow
+import numpy as np
 from bert_serving.server import BertServer
+from bert_serving.client import BertClient
+from termcolor import colored
 from bert_serving.server.helper import get_run_args
-
 
 if __name__ == '__main__':
     args = get_run_args()
@@ -22,13 +24,6 @@ if __name__ == '__main__':
     server.start()
     server.join()
 
-#Exercises:
-#on a new tab
-python 
-
-#imports
-import tensorflow
-import numpy as np
 from termcolor import colored
 prefix_q = '##### **Q:** '
 topk = 5
