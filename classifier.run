@@ -1,9 +1,10 @@
-# Before running classifier
+# Goal to fine tune Bert w. glue (it can be adapted to fine tune w. squad and others, too)...
+# Before running 'classifier.run', first run the foll. 3 lines on bash
 # export BERT_BASE_DIR=/path/to/bert/uncased_L-12_H-768_A-12
 # export GLUE_DIR=/path/to/glue
 # python gpu_growth.py
 
-# ./classifier.run
+# The foll. include the lines that are also found when one runs ./classifier.run :
 
 python run_classifier.py \
   --task_name=MRPC \
@@ -19,4 +20,5 @@ python run_classifier.py \
   --num_train_epochs=2.0 \
   --output_dir=/tmp/mrpc_output/
 
-#bert-serving-start -model_dir=uncased_L-12_H-768_A-12 -tuned_model_dir /tmp/mrpc_output -ckpt_name=model.ckpt-458 
+# After fine tuning Bert w. glue, then run the following line to start the fine tuned bert server...
+# bert-serving-start -model_dir=uncased_L-12_H-768_A-12 -tuned_model_dir /tmp/mrpc_output -ckpt_name=model.ckpt-458 
