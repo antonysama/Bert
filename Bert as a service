@@ -46,5 +46,6 @@ with BertClient(ip='192.168.0.10') as bc:
 
 
 #Reference 
+https://buildmedia.readthedocs.org/media/pdf/bert-as-service/latest/bert-as-service.pdf
 https://bert-as-service.readthedocs.io/en/latest/tutorial/index.html (tutorials)
 https://github.com/hanxiao/bert-as-service/blob/master/README.md (other bert e.g.s)
