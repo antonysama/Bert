@@ -1,7 +1,8 @@
 # Goal is to run Bert server & client. 
 pip install tensorflow-gpu
 pip install -U bert-serving-server bert-serving-client
-# After all installs run the below code (or run the foll. from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
+# After all installs run bert-serving-start -model_dir uncased_L-12_H-768_A-12 -num_worker=4
+#(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
 
 #Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
 #https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity:
@@ -45,7 +46,8 @@ with BertClient(ip='192.168.0.10') as bc:
             print('> %s\t%s' % (colored('%.1f' % score[idx], 'cyan'), colored(questions[idx], 'yellow')))
 
 
-#Reference 
-https://buildmedia.readthedocs.org/media/pdf/bert-as-service/latest/bert-as-service.pdf
-https://bert-as-service.readthedocs.io/en/latest/tutorial/index.html (tutorials)
-https://github.com/hanxiao/bert-as-service/blob/master/README.md (other bert e.g.s)
+# References:
+# Staring server & client: https://buildmedia.readthedocs.org/media/pdf/bert-as-service/latest/bert-as-service.pdf
+# Tutorials: https://bert-as-service.readthedocs.io/en/latest/tutorial/token-embed.html
+# Repo: https://github.com/google-research/bert
+# Examples: https://github.com/hanxiao/bert-as-service/blob/master/README.md
