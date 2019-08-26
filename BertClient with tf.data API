@@ -27,6 +27,11 @@ import json
 import requests
 import urllib.request
 
+from pprint import pprint
+with open('data.json') as f:
+...data = json.load(f)
+train_fp = str(data)
+
 connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
 js = connection.read()   #json encoded as uitf-8
 info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
@@ -80,3 +85,6 @@ with tf.Session() as sess:
             time_used = time.perf_counter() - start_t
             print('data speed: %d/s' % int(num_samples / time_used))
             cnt, num_samples, start_t = 0, 0, time.perf_counter()
+
+tensorflow.python.framework.errors_impl.NotFoundError: {'maps': [{'id': 'blabla', 'iscategorical': '0'}, {'id': 'blabla', 'iscategorical': '0'}], 'masks': {'id': 'valore'}, 'om_points': 'value', 'parameters': {'id': 'valore'}}; No such file or directory
+	 [[{{node IteratorGetNext_8}}]]
