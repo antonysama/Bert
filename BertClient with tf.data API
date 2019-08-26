@@ -24,16 +24,24 @@ bc = BertClient()
 # Or,
 # First, make json text
 import json
+import requests
 import urllib.request
-connection = urllib.request.urlopen('http://python-data.dr-chuck.net/comments_220996.json')
-js = connection.read()   #json encoded at uitf-8
-info = json.loads(js.decode("utf-8"))  #parse it into a string
+
+response = requests.get('https://jsonplaceholder.typicode.com/todos')
+#train_fp  = json.loads(response.content)
+js = response.read()   #json encoded at uitf-8
+#train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
+train_fp = json.dumps(js , indent=4)
+
+connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
+js = connection.read()   #json encoded as uitf-8
+info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
+train_fp = json.dumps(info , indent=4)
 
 # Then, make  concurrent bc
 from bert_serving.client import ConcurrentBertClient
 os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
-with open("config.json", "r") as read_file:
-    train_fp = json.load(read_file) 
+
 batch_size = 256
 num_parallel_calls = 4
 num_clients = 10  
