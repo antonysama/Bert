@@ -32,10 +32,11 @@ info = json.loads(js.decode("utf-8"))  #parse it into a string
 # Then, make  concurrent bc
 from bert_serving.client import ConcurrentBertClient
 os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
-train_fp = js # not info  ?
-batch_size = 128
+with open("config.json", "r") as read_file:
+    train_fp = json.load(read_file) 
+batch_size = 256
 num_parallel_calls = 4
-num_clients = 8  
+num_clients = 10  
 bc = ConcurrentBertClient()
 
 # Or,
