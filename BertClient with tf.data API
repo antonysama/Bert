@@ -13,16 +13,12 @@ import time
 import GPUtil
 import tensorflow as tf
 from bert_serving.server import BertServer
+
 # If you want embeddings that corresponds to every token, you can simply use slice index as follows:
 max_seq_len = 25
 pooling_strategy = NONE
 
-# Chose one of the foll. for bc :
-from bert_serving.client import BertClient
-bc = BertClient()
-
-# Or,
-# First, make json text
+# First, make json text with one of the following before making bert client :
 import json
 import requests
 import urllib.request
@@ -43,23 +39,28 @@ js = response.read()   #json encoded at uitf-8
 #train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
 train_fp = json.dumps(js , indent=4)
 
-# Then, make  concurrent bc
-from bert_serving.client import ConcurrentBertClient
-os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
-
+# Also make the fo
 batch_size = 256
 num_parallel_calls = 4
 num_clients = 10  
-bc = ConcurrentBertClient()
+bc = ConcurrentBertClient()llowing before making Bert client :
+
+# Make bert client w. one of the following :
+from bert_serving.client import BertClient
+bc = BertClient()
 
 # Or,
-bc2 = [BertClient(show_server_config=False) for _ in range(num_clients)]
+bc = [BertClient(show_server_config=False) for _ in range(num_clients)]
+
+# Or,
+from bert_serving.client import ConcurrentBertClient
+os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
 # If you want to use your own tokenizer to segment sentences instead of the default one from BERTencode(is_tokenized=True) on the client slide as follows:
 texts2 = [s.split() for s in texts]
 bc.encode(texts2, is_tokenized=True)  # remember to first run bc = BertClient()
 
-
+# After making bc do the following to make data iteration :
 def get_encodes(x):
     # x is `batch_size` of lines, each of which is a json object
     samples = [json.loads(l) for l in x]
@@ -68,7 +69,7 @@ def get_encodes(x):
     labels = [0 for _ in text]
     return features, labels
 
-# GPU growth
+# If you want GPU growth use the following three lines:
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True 
 session = tf.Session(config=config)
@@ -91,5 +92,4 @@ with tf.Session() as sess:
             print('data speed: %d/s' % int(num_samples / time_used))
             cnt, num_samples, start_t = 0, 0, time.perf_counter()
 
-tensorflow.python.framework.errors_impl.NotFoundError: {'maps': [{'id': 'blabla', 'iscategorical': '0'}, {'id': 'blabla', 'iscategorical': '0'}], 'masks': {'id': 'valore'}, 'om_points': 'value', 'parameters': {'id': 'valore'}}; No such file or directory
-	 [[{{node IteratorGetNext_8}}]]
+tensorflow.python.framework.errors_impl.NotFoundError: ... No such file or directory..	 [[{{node IteratorGetNext_8}}]]
