@@ -43,7 +43,7 @@ train_fp = json.dumps(js , indent=4)
 
 Or,
 import requests
-f=requests.get('https://jsonplaceholder.typicode.com/todos',params=
+f=requests.get('https://gist.githubusercontent.com/planetoftheweb/98f35786733c8cccf81e/raw/f3dad774ed1fe20b36011b1261bb392ee759b867/data.json',params=
 {"$filter":"Path eq '/xxxxxx/'"}).json()
 
 with open('data.json', 'w') as out:
