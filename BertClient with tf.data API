@@ -77,7 +77,7 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True 
 session = tf.Session(config=config)
 
-data_node = (tf.data.TextLineDataset(train_fp).batch(batch_size)
+data_node = (tf.data.TextLineDataset("train_fp.txt").batch(batch_size)
              .map(lambda x: tf.py_func(get_encodes, [x], [tf.float32, tf.int64], name='bert_client'),
                   num_parallel_calls=num_parallel_calls)
              .map(lambda x, y: {'feature': x, 'label': y})
@@ -95,4 +95,5 @@ with tf.Session() as sess:
             print('data speed: %d/s' % int(num_samples / time_used))
             cnt, num_samples, start_t = 0, 0, time.perf_counter()
 
-tensorflow.python.framework.errors_impl.NotFoundError: ... No such file or directory..	 [[{{node IteratorGetNext_8}}]]
+tensorflow.python.framework.errors_... No such file or directory..	[fixed with naming the "train_fp.txt" in the last few lines]
+tensorflow.python.framework.errors_...OutOfRangeError: End of sequence
