@@ -42,9 +42,9 @@ js = response.read()   #json encoded at uitf-8
 train_fp = json.dumps(js , indent=4)
 
 Or,
-import urllib.request
-with urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos') as response:
-   f = response.read()
+import requests
+f=requests.get('https://jsonplaceholder.typicode.com/todos',params=
+{"$filter":"Path eq '/xxxxxx/'"}).json()
 
 with open('data.json', 'w') as out:
         json.dump(list(f), out, ensure_ascii=False, indent=4)
