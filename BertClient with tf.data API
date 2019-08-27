@@ -21,31 +21,33 @@ pooling_strategy = NONE
 # First, make json text with one of the following before making bert client :
 import json
 import requests
-import urllib.request
-
 from pprint import pprint
 with open('data.json') as f:
-...data = json.load(f)
+    data = json.load(f)
+    
 train_fp = str(data)
 
+Or,
+import urllib.request
 connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
 js = connection.read()   #json encoded as uitf-8
 info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
 train_fp = json.loads(json.dumps(info)) #json dump then load
 
+Or,
 response = requests.get('https://jsonplaceholder.typicode.com/todos')
 #train_fp  = json.loads(response.content)
 js = response.read()   #json encoded at uitf-8
 #train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
 train_fp = json.dumps(js , indent=4)
 
-# Also make the fo
+# Also make the following before making Bert Client
 batch_size = 256
 num_parallel_calls = 4
 num_clients = 10  
 bc = ConcurrentBertClient()llowing before making Bert client :
 
-# Make bert client w. one of the following :
+# Make Bert client w. one of the following :
 from bert_serving.client import BertClient
 bc = BertClient()
 
