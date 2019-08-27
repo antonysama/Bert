@@ -103,5 +103,7 @@ with tf.Session() as sess:
             print('data speed: %d/s' % int(num_samples / time_used))
             cnt, num_samples, start_t = 0, 0, time.perf_counter()
 
+# Errors & how I fixed them:
 tensorflow.python.framework.errors_... No such file or directory..	[fixed with naming the "train_fp.txt" in the last few lines]
-tensorflow.python.framework.errors_...OutOfRangeError: End of sequence
+tensorflow.python.framework.errors_...OutOfRangeError: End of sequence  [fixed w. more json data]
+JSONDecodeError: Expecting value: line 1 column 1 (char ....???
