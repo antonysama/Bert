@@ -45,7 +45,7 @@ train_fp = json.dumps(js , indent=4)
 batch_size = 256
 num_parallel_calls = 4
 num_clients = 10  
-bc = ConcurrentBertClient()llowing before making Bert client :
+os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
 # Make Bert client w. one of the following :
 from bert_serving.client import BertClient
@@ -56,7 +56,8 @@ bc = [BertClient(show_server_config=False) for _ in range(num_clients)]
 
 # Or,
 from bert_serving.client import ConcurrentBertClient
-os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
+bc = ConcurrentBertClient()
+
 
 # If you want to use your own tokenizer to segment sentences instead of the default one from BERTencode(is_tokenized=True) on the client slide as follows:
 texts2 = [s.split() for s in texts]
