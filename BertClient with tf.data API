@@ -22,10 +22,12 @@ pooling_strategy = NONE
 import json
 
 #Reading downloaded json file (of sz 950bytes)
-with open('data.json', 'r') as f:
+with open('rows.json', 'r') as f:
         data = f.read().strip();
         
 str = data.replace("\'", "\"") # fixes error "missing dbl quotes". Then went to data node below.
+$ pip install jsbeautifier   # you can also use jsbeautifier, which is less strict
+$ js-beautify file.js   
 
 # Or,
 import requests
@@ -59,8 +61,8 @@ with open('data.json', 'w') as out:
     
 # Also make the following before making Bert Client
 batch_size = 256
-num_parallel_calls = 4
-num_clients = 10  
+num_parallel_calls = 2
+num_clients = 5  
 os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
 # Make Bert client w. one of the following :
