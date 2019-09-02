@@ -1,5 +1,9 @@
 # QUESTION 1 : I downloaded file (uncased_L-12_H-768_A-12) to a directory (k). How do you run this file straight from git?
 cd ~/environments/k/
+
+# Dependnecies
+pip install tensorflow-gpu
+pip install -U bert-serving-server bert-serving-client
 bert-serving-start -model_dir=uncased_L-12_H-768_A-12
 
 # Optional: if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
