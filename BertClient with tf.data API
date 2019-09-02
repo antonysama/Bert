@@ -15,6 +15,7 @@ import json
 import os
 import time
 import GPUtil
+import numpy
 import tensorflow as tf
 from bert_serving.server import BertServer
 
@@ -27,10 +28,9 @@ from bert_serving.server import BertServer
 with open('rows.json', 'r') as f:
         data = f.read().strip();
 
-# This prevents an error for the json file "missing dbl quotes" that shows up below.
+# These prevent an error for the json file "missing dbl quotes" that shows up below.
 str = data.replace("\'", "\"") 
-$ pip install jsbeautifier   # you can also use jsbeautifier, which is less strict
-$ js-beautify file.js   
+# Optional you can also use jsbeautifier, which is less strict: $ pip install jsbeautifier   $ js-beautify file.js   
 
 # Optional:
 # import requests
@@ -38,8 +38,6 @@ $ js-beautify file.js
 # with open('data.json') as f:
 #    data = json.load(f)
     
-train_fp = str(data)
-
 # Optional
 # import urllib.request
 # connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
@@ -59,16 +57,17 @@ train_fp = str(data)
 # f=requests.get('https://gist.githubusercontent.com/planetoftheweb/98f35786733c8cccf81e/raw/f3dad774ed1fe20b36011b1261bb392ee759b867/data.json',params=
 # {"$filter":"Path eq '/xxxxxx/'"}).json()
 
-# Processes the json file
-with open('data.json', 'w') as out:
-        json.dump(list(f), out, ensure_ascii=False, indent=4)
+# Not sure about this! Processes the json file
+# with open('data.json', 'w') as out:
+#       json.dump(list(f), out, ensure_ascii=False, indent=4)
     
 # QUESTION 3: How do these affect the training (batch size, number of clients etc.,) ?
 # Process the following before making Bert Client furthe below
 batch_size = 256
 num_parallel_calls = 2
 num_clients = 5  
-os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
+# Not sure about this!
+# os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
 # Make Bert client w. one of the following options:
 # Prefered method for the problem below:
