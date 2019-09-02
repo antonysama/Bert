@@ -4,4 +4,4 @@
 
 ## Instructions to reader: 
 #### I have written 5 questions in that particular file:
-#### Questions t 2-3 questions are related to python; 3-5 tensorflow/bert.
+#### Questions 1-3  are related to python; 3-5 tensorflow/bert.
