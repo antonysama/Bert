@@ -18,12 +18,14 @@ import GPUtil
 import numpy
 import tensorflow as tf
 from bert_serving.server import BertServer
+# Note: BertClient is imported further below
 
+# QUESTION 2: How do these affect training?
 # Optional: If you want embeddings that corresponds to every token, you can simply use slice index as follows:
 # max_seq_len = 25
 # pooling_strategy = NONE
 
-# QUESTION 2(same as Qstn1 above, can you open 'rows.json' from git?): 
+# QUESTION 3(same as question 1) can you open this file direct from git? 
 # Open json text file to be used by bert client further below :
 with open('rows.json', 'r') as f:
         data = f.read().strip();
@@ -61,16 +63,16 @@ str = data.replace("\'", "\"")
 # with open('data.json', 'w') as out:
 #       json.dump(list(f), out, ensure_ascii=False, indent=4)
     
-# QUESTION 3: How do these affect the training (batch size, number of clients etc.,) ?
+# QUESTION 4.1 How do these affect the training ?
+# QUESTION 4.2 what is "os.environ['CUDA_VISIBLE_DEVICES'] below... ?
 # Process the following before making Bert Client furthe below
 batch_size = 256
 num_parallel_calls = 2
 num_clients = 5  
-# Not sure about this!
 # os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
-# Make Bert client w. one of the following options:
-# Prefered method for the problem below:
+# Prefered option to make Bert clien:
+# Prefered method:
 from bert_serving.client import ConcurrentBertClient
 bc = ConcurrentBertClient()
 
@@ -99,14 +101,14 @@ def get_encodes(x):
 # config.gpu_options.allow_growth = True 
 # session = tf.Session(config=config)
 
-# QUESTION 4: What is data node?
+# QUESTION 5: What is data node?
 data_node = (tf.data.TextLineDataset(str).batch(batch_size)
              .map(lambda x: tf.py_func(get_encodes, [x], [tf.float32, tf.int64], name='bert_client'),
                   num_parallel_calls=num_parallel_calls)
              .map(lambda x, y: {'feature': x, 'label': y})
              .make_one_shot_iterator().get_next())
 
-# Question 5: How do you fix "InvalidArgumentError:..?"
+# Question 6: How do you fix "InvalidArgumentError:..?"
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     cnt, num_samples, start_t = 0, 0, time.perf_counter()
