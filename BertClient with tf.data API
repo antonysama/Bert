@@ -1,11 +1,11 @@
-# the foll. is on Ubuntu bash : 
+# QUESTION 1 : I downloaded file (uncased_L-12_H-768_A-12) to a directory (k). Can you run that straight from git?
 cd ~/environments/k/
 bert-serving-start -model_dir=uncased_L-12_H-768_A-12
 
-# if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
-bert-serving-start -pooling_strategy NONE -model_dir=uncased_L-12_H-768_A-12
+# Optional: if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
+# bert-serving-start -pooling_strategy NONE -model_dir=uncased_L-12_H-768_A-12
 
-# the foll. is on Python :
+# On Python :
 Python
 import json
 import os
@@ -14,74 +14,75 @@ import GPUtil
 import tensorflow as tf
 from bert_serving.server import BertServer
 
-# If you want embeddings that corresponds to every token, you can simply use slice index as follows:
-max_seq_len = 25
-pooling_strategy = NONE
+# Optional: If you want embeddings that corresponds to every token, you can simply use slice index as follows:
+# max_seq_len = 25
+# pooling_strategy = NONE
 
-# First, make json text with one of the following before making bert client :
-import json
-
-#Reading downloaded json file (of sz 950bytes)
+# QUESTION 2(same as Qstn1 above, can you open 'rows.json' from git?): 
+# Open json text file to be used by bert client further below :
 with open('rows.json', 'r') as f:
         data = f.read().strip();
-        
-str = data.replace("\'", "\"") # fixes error "missing dbl quotes". Then went to data node below.
+
+# This prevents an error for the json file "missing dbl quotes" that shows up below.
+str = data.replace("\'", "\"") 
 $ pip install jsbeautifier   # you can also use jsbeautifier, which is less strict
 $ js-beautify file.js   
 
-# Or,
-import requests
-from pprint import pprint
-with open('data.json') as f:
-    data = json.load(f)
+# Optional:
+# import requests
+# from pprint import pprint
+# with open('data.json') as f:
+#    data = json.load(f)
     
 train_fp = str(data)
 
-Or,
-import urllib.request
-connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
-js = connection.read()   #json encoded as uitf-8
-info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
-train_fp = json.loads(json.dumps(info)) #json dump then load
+# Optional
+# import urllib.request
+# connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
+# js = connection.read()   #json encoded as uitf-8
+# info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
+# train_fp = json.loads(json.dumps(info)) #json dump then load
 
-Or,
-response = requests.get('https://jsonplaceholder.typicode.com/todos')
-#train_fp  = json.loads(response.content)
-js = response.read()   #json encoded at uitf-8
-#train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
-train_fp = json.dumps(js , indent=4)
+# Optional
+# response = requests.get('https://jsonplaceholder.typicode.com/todos')
+# train_fp  = json.loads(response.content)
+# js = response.read()   #json encoded at uitf-8
+# train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
+# train_fp = json.dumps(js , indent=4)
 
-Or,
-import requests
-f=requests.get('https://gist.githubusercontent.com/planetoftheweb/98f35786733c8cccf81e/raw/f3dad774ed1fe20b36011b1261bb392ee759b867/data.json',params=
-{"$filter":"Path eq '/xxxxxx/'"}).json()
+# Optional
+# import requests
+# f=requests.get('https://gist.githubusercontent.com/planetoftheweb/98f35786733c8cccf81e/raw/f3dad774ed1fe20b36011b1261bb392ee759b867/data.json',params=
+# {"$filter":"Path eq '/xxxxxx/'"}).json()
 
+# Processes the json file
 with open('data.json', 'w') as out:
         json.dump(list(f), out, ensure_ascii=False, indent=4)
     
-# Also make the following before making Bert Client
+# QUESTION 3: How do these affect the training (batch size, number of clients etc.,) ?
+# Process the following before making Bert Client furthe below
 batch_size = 256
 num_parallel_calls = 2
 num_clients = 5  
 os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
-# Make Bert client w. one of the following :
-from bert_serving.client import BertClient
-bc = BertClient()
-
-# Or,
-bc = [BertClient(show_server_config=False) for _ in range(num_clients)]
-
-# Or,
+# Make Bert client w. one of the following options:
+# Prefered method for the problem below:
 from bert_serving.client import ConcurrentBertClient
 bc = ConcurrentBertClient()
 
+# Optional
+# from bert_serving.client import BertClient
+# bc = BertClient()
 
-# If you want to use your own tokenizer to segment sentences instead of the default one from BERTencode(is_tokenized=True) on the client slide as follows:
-texts2 = [s.split() for s in texts]
-bc.encode(texts2, is_tokenized=True)  # remember to first run bc = BertClient()
+# Optional
+# bc = [BertClient(show_server_config=False) for _ in range(num_clients)]
 
-# After making bc do the following to make data iteration :
+# Optional: If you want to use your own tokenizer to segment sentences instead of the default one from BERTencode(is_tokenized=True) on the client slide as follows:
+# texts2 = [s.split() for s in texts]
+# bc.encode(texts2, is_tokenized=True)  # remember to first run bc = BertClient()
+
+# Makes data iteration :
 def get_encodes(x):
     # x is `batch_size` of lines, each of which is a json object
     samples = [json.loads(l) for l in x]
@@ -90,17 +91,19 @@ def get_encodes(x):
     labels = [0 for _ in text]
     return features, labels
 
-# If you want GPU growth use the following three lines:
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True 
-session = tf.Session(config=config)
+# Optional: If you want GPU growth :
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True 
+# session = tf.Session(config=config)
 
+# QUESTION 4: What is data node?
 data_node = (tf.data.TextLineDataset(str).batch(batch_size)
              .map(lambda x: tf.py_func(get_encodes, [x], [tf.float32, tf.int64], name='bert_client'),
                   num_parallel_calls=num_parallel_calls)
              .map(lambda x, y: {'feature': x, 'label': y})
              .make_one_shot_iterator().get_next())
 
+# Question 5: How do you fix "InvalidArgumentError:..?"
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     cnt, num_samples, start_t = 0, 0, time.perf_counter()
