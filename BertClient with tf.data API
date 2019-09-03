@@ -1,10 +1,12 @@
 # QUESTION 1 : I downloaded file (uncased_L-12_H-768_A-12) to a directory (k). How do you run this file straight from git?
 cd ~/environments/k/
 
-# Dependnecies
-pip install tensorflow-gpu
+# Dependnecies part 1
 pip install -U bert-serving-server bert-serving-client
 bert-serving-start -model_dir=uncased_L-12_H-768_A-12
+
+# When you see "ready to serve client",start new tab and install Dependency part 2
+pip install tensorflow-gpu
 
 # Optional: if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
 # bert-serving-start -pooling_strategy NONE -model_dir=uncased_L-12_H-768_A-12
@@ -30,7 +32,7 @@ from bert_serving.server import BertServer
 with open('rows.json', 'r') as f:
         data = f.read().strip();
 
-# These prevent an error for the json file "missing dbl quotes" that shows up below.
+# These process the json data and prevent error "...expecting string".
 str = data.replace("\'", "\"") 
 # Optional you can also use jsbeautifier, which is less strict: $ pip install jsbeautifier   $ js-beautify file.js   
 
