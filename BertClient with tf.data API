@@ -5,7 +5,7 @@ cd ~/environments/k/
 pip install -U bert-serving-server bert-serving-client
 bert-serving-start -model_dir=uncased_L-12_H-768_A-12
 
-# When you see "ready to serve client",start new tab and install Dependency part 2
+# Dependency part 2: When you see "ready to serve client",start a new tab and install tf and then go to python
 pip install tensorflow-gpu
 
 # Optional: if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
