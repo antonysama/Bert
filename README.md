@@ -3,7 +3,7 @@
 
 
 ### Major question: 
-####  Question #6-- why am I getting the "invalid argument error" at the end, and how can I solve it? (The data file is "rows.json" above. The Bert api "Bert-uncased..." is also above for downloading and running.)
+####  Question #6-- why am I getting the "invalid argument error" at the end, and how can I solve it? (You may download the data file  "rows.json" and the Bert api "uncased. L-12..." from above and run it code on "BertClient with tf.data API".)
 
 
 ### Minor questions:
