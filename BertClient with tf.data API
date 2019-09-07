@@ -8,7 +8,7 @@ bert-serving-start -model_dir=uncased_L-12_H-768_A-12
 # Dependency part 2: When you see "ready to serve client",start a new tab and install tf and then go to python
 pip install tensorflow-gpu
 
-# Optional: if you want to ELMo-like contextual word embedding set -pooling_strategy NONE as so :
+# Optional: if you want  ELMo-like contextual word embedding set -pooling_strategy NONE as follows :
 # bert-serving-start -pooling_strategy NONE -model_dir=uncased_L-12_H-768_A-12
 
 # On Python :
@@ -35,36 +35,7 @@ with open('rows.json', 'r') as f:
 # These process the json data and prevent error "...expecting string".
 str = data.replace("\'", "\"") 
 # Optional you can also use jsbeautifier, which is less strict: $ pip install jsbeautifier   $ js-beautify file.js   
-
-# Optional:
-# import requests
-# from pprint import pprint
-# with open('data.json') as f:
-#    data = json.load(f)
-    
-# Optional
-# import urllib.request
-# connection = urllib.request.urlopen('https://jsonplaceholder.typicode.com/todos')
-# js = connection.read()   #json encoded as uitf-8
-# info = json.loads(js.decode("utf-8"))  # uif parsed  into a string
-# train_fp = json.loads(json.dumps(info)) #json dump then load
-
-# Optional
-# response = requests.get('https://jsonplaceholder.typicode.com/todos')
-# train_fp  = json.loads(response.content)
-# js = response.read()   #json encoded at uitf-8
-# train_fp = json.loads(js.decode("utf-8"))  #parse it into a string
-# train_fp = json.dumps(js , indent=4)
-
-# Optional
-# import requests
-# f=requests.get('https://gist.githubusercontent.com/planetoftheweb/98f35786733c8cccf81e/raw/f3dad774ed1fe20b36011b1261bb392ee759b867/data.json',params=
-# {"$filter":"Path eq '/xxxxxx/'"}).json()
-
-# Not sure about this! Processes the json file
-# with open('data.json', 'w') as out:
-#       json.dump(list(f), out, ensure_ascii=False, indent=4)
-    
+  
 # QUESTION 4.1 How do these affect the training ?
 # QUESTION 4.2 what is "os.environ['CUDA_VISIBLE_DEVICES'] below... ?
 # Process the following before making Bert Client furthe below
@@ -73,23 +44,15 @@ num_parallel_calls = 2
 num_clients = 5  
 # os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
 
-# Prefered option to make Bert clien:
-# Prefered method:
+# Make BConcurrentBertClient:
 from bert_serving.client import ConcurrentBertClient
 bc = ConcurrentBertClient()
-
-# Optional
-# from bert_serving.client import BertClient
-# bc = BertClient()
-
-# Optional
-# bc = [BertClient(show_server_config=False) for _ in range(num_clients)]
 
 # Optional: If you want to use your own tokenizer to segment sentences instead of the default one from BERTencode(is_tokenized=True) on the client slide as follows:
 # texts2 = [s.split() for s in texts]
 # bc.encode(texts2, is_tokenized=True)  # remember to first run bc = BertClient()
 
-# Makes data iteration :
+# Make data iteration :
 def get_encodes(x):
     # x is `batch_size` of lines, each of which is a json object
     samples = [json.loads(l) for l in x]
@@ -124,7 +87,6 @@ with tf.Session() as sess:
             cnt, num_samples, start_t = 0, 0, time.perf_counter()
 
 # Errors & how I fixed them:
-
 tensorflow.python.framework.errors_... No such file or directory..	[fixed with naming the "train_fp.txt" in the last few lines]
 tensorflow.python.framework.errors_...OutOfRangeError: End of sequence  [fixed w. more json data]
 JSONDecodeError: Expecting value: line 1 column 1 ...[Fixed by opening a good json and running it through str = data.replace("\'", "\"")]
