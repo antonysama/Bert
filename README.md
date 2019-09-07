@@ -1,5 +1,5 @@
 ### Introduction and instructions: 
-####    Bert is a Tensorflow-api for natural language processing. My instructions on installing dependnecies are on the script called "BertClient with tf.data API" on (lines 3-6). The  only error happens at the end, I have marked it as question is #6.
+####    Bert is a Tensorflow-api for natural language processing. My instructions on installing dependnecies are on the script called "BertClient with tf.data API" on (lines 3-6). The  only error happens at the end where I have marked it as question is #6. It is the only major question I have on the script (see below).
 
 
 ### Major question: 
