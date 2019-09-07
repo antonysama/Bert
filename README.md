@@ -7,4 +7,4 @@
 ### Major questions: 
 ####    First, the  only  error happens at the end of the script. I have marked it as question is #6: why am I getting the "invalid argument error"? Second, I would like to attempt the same goal in keras (reference#2)
 
-#####(reference: #1. https://github.com/antonysama/bert-as-service#using-bertclient-with-tfdata-api   reference #2. https://github.com/hanxiao/bert-as-service/issues/29#issuecomment-442362241)
+###### (reference: #1. https://github.com/antonysama/bert-as-service#using-bertclient-with-tfdata-api   reference #2. https://github.com/hanxiao/bert-as-service/issues/29#issuecomment-442362241)
