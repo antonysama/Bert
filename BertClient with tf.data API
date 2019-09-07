@@ -1,5 +1,6 @@
 # QUESTION 1 : I downloaded file (uncased_L-12_H-768_A-12) to a directory (k). How do you run this file straight from git?
 cd ~/environments/k/
+# A: You gotta download ethe entire repo
 
 # Dependnecies part 1
 pip install -U bert-serving-server bert-serving-client
@@ -23,6 +24,7 @@ from bert_serving.server import BertServer
 # Note: BertClient is imported further below
 
 # QUESTION 2: How do these affect training?
+# A:Dimension of the input to LSTM is (Batch_size , timesteps, features or embedding dimension)
 # Optional: If you want embeddings that corresponds to every token, you can simply use slice index as follows:
 # max_seq_len = 25
 # pooling_strategy = NONE
@@ -42,8 +44,8 @@ str = data.replace("\'", "\"")
 batch_size = 256
 num_parallel_calls = 2
 num_clients = 5  
-# os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())
-
+# os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable())  # default uses GPU
+# os.environ['CUDA_VISIBLE_DEVICES'] = str(GPUtil.getFirstAvailable()), as -1, # to use CPU if you get a "resource exhaused" error
 # Make BConcurrentBertClient:
 from bert_serving.client import ConcurrentBertClient
 bc = ConcurrentBertClient()
@@ -61,12 +63,14 @@ def get_encodes(x):
     labels = [0 for _ in text]
     return features, labels
 
-# Optional: If you want GPU growth :
+# Optional: If you want GPU growth. Allowing tf to only use what it needs. But it won't help a "resource exhasted" error.
 # config = tf.ConfigProto()
 # config.gpu_options.allow_growth = True 
 # session = tf.Session(config=config)
 
 # QUESTION 5: What is data node?
+#an = [ 1 ,2 ,3, 5], map(lambda x: x*x,an ) #Maps the labmda function, to the entire list. 
+# a = 5, 
 data_node = (tf.data.TextLineDataset(str).batch(batch_size)
              .map(lambda x: tf.py_func(get_encodes, [x], [tf.float32, tf.int64], name='bert_client'),
                   num_parallel_calls=num_parallel_calls)
