@@ -1,0 +1,560 @@
+{
+  "meta" : {
+    "view" : {
+      "id" : "kku6-nxdu",
+      "name" : "Demographic Statistics By Zip Code",
+      "attribution" : "Department of Youth and Community Development (DYCD)",
+      "averageRating" : 0,
+      "category" : "City Government",
+      "createdAt" : 1311775554,
+      "description" : "Demographic statistics broken down by zip code",
+      "displayType" : "table",
+      "downloadCount" : 850950,
+      "hideFromCatalog" : false,
+      "hideFromDataJson" : false,
+      "indexUpdatedAt" : 1536596131,
+      "newBackend" : true,
+      "numberOfComments" : 3,
+      "oid" : 4208790,
+      "provenance" : "official",
+      "publicationAppendEnabled" : false,
+      "publicationDate" : 1372266760,
+      "publicationGroup" : 238846,
+      "publicationStage" : "published",
+      "rowClass" : "",
+      "rowsUpdatedAt" : 1372266747,
+      "rowsUpdatedBy" : "uurm-7z6x",
+      "tableId" : 942474,
+      "totalTimesRated" : 0,
+      "viewCount" : 43887,
+      "viewLastModified" : 1536607326,
+      "viewType" : "tabular",
+      "approvals" : [ {
+        "reviewedAt" : 1372266760,
+        "reviewedAutomatically" : true,
+        "state" : "approved",
+        "submissionId" : 1064760,
+        "submissionObject" : "public_audience_request",
+        "submissionOutcome" : "change_audience",
+        "submittedAt" : 1372266760,
+        "workflowId" : 2285,
+        "submissionDetails" : {
+          "permissionType" : "READ"
+        },
+        "submissionOutcomeApplication" : {
+          "failureCount" : 0,
+          "status" : "success"
+        },
+        "submitter" : {
+          "id" : "5fuc-pqz2",
+          "displayName" : "NYC OpenData"
+        }
+      } ],
+      "columns" : [ {
+        "id" : -1,
+        "name" : "sid",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":sid",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "id",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":id",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "position",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":position",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "created_at",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":created_at",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "created_meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":created_meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "updated_at",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":updated_at",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "updated_meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":updated_meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : -1,
+        "name" : "meta",
+        "dataTypeName" : "meta_data",
+        "fieldName" : ":meta",
+        "position" : 0,
+        "renderTypeName" : "meta_data",
+        "format" : { },
+        "flags" : [ "hidden" ]
+      }, {
+        "id" : 77010810,
+        "name" : "JURISDICTION NAME",
+        "dataTypeName" : "number",
+        "fieldName" : "jurisdiction_name",
+        "position" : 2,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501660,
+        "width" : 304,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "11127.17372881356",
+          "largest" : "20459",
+          "null" : 0,
+          "top" : [ {
+            "item" : "11695",
+            "count" : 20
+          }, {
+            "item" : "11731",
+            "count" : 19
+          }, {
+            "item" : "11798",
+            "count" : 18
+          }, {
+            "item" : "11968",
+            "count" : 17
+          }, {
+            "item" : "12423",
+            "count" : 16
+          }, {
+            "item" : "12428",
+            "count" : 15
+          }, {
+            "item" : "12435",
+            "count" : 14
+          }, {
+            "item" : "12458",
+            "count" : 13
+          }, {
+            "item" : "12466",
+            "count" : 12
+          }, {
+            "item" : "12473",
+            "count" : 11
+          }, {
+            "item" : "12528",
+            "count" : 10
+          }, {
+            "item" : "12701",
+            "count" : 9
+          }, {
+            "item" : "12733",
+            "count" : 8
+          }, {
+            "item" : "12734",
+            "count" : 7
+          }, {
+            "item" : "12737",
+            "count" : 6
+          }, {
+            "item" : "12750",
+            "count" : 5
+          }, {
+            "item" : "12751",
+            "count" : 4
+          }, {
+            "item" : "12754",
+            "count" : 3
+          }, {
+            "item" : "12758",
+            "count" : 2
+          }, {
+            "item" : "12759",
+            "count" : 1
+          } ],
+          "smallest" : "10001",
+          "sum" : "2626013"
+        },
+        "format" : {
+          "precisionStyle" : "standard",
+          "noCommas" : "true",
+          "align" : "right"
+        }
+      }, {
+        "id" : 77010811,
+        "name" : "COUNT PARTICIPANTS",
+        "dataTypeName" : "number",
+        "fieldName" : "count_participants",
+        "position" : 3,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501661,
+        "width" : 316,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "17.66101694915254",
+          "largest" : "272",
+          "null" : 0,
+          "top" : [ {
+            "item" : "1",
+            "count" : 20
+          }, {
+            "item" : "0",
+            "count" : 19
+          }, {
+            "item" : "2",
+            "count" : 18
+          }, {
+            "item" : "3",
+            "count" : 17
+          }, {
+            "item" : "8",
+            "count" : 16
+          }, {
+            "item" : "17",
+            "count" : 15
+          }, {
+            "item" : "7",
+            "count" : 14
+          }, {
+            "item" : "4",
+            "count" : 13
+          }, {
+            "item" : "27",
+            "count" : 12
+          }, {
+            "item" : "20",
+            "count" : 11
+          }, {
+            "item" : "13",
+            "count" : 10
+          }, {
+            "item" : "5",
+            "count" : 9
+          }, {
+            "item" : "14",
+            "count" : 8
+          }, {
+            "item" : "52",
+            "count" : 7
+          }, {
+            "item" : "59",
+            "count" : 6
+          }, {
+            "item" : "15",
+            "count" : 5
+          }, {
+            "item" : "10",
+            "count" : 4
+          }, {
+            "item" : "11",
+            "count" : 3
+          }, {
+            "item" : "37",
+            "count" : 2
+          }, {
+            "item" : "21",
+            "count" : 1
+          } ],
+          "smallest" : "0",
+          "sum" : "4168"
+        },
+        "format" : { }
+      }, {
+        "id" : 77010812,
+        "name" : "COUNT FEMALE",
+        "dataTypeName" : "number",
+        "fieldName" : "count_female",
+        "position" : 4,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501662,
+        "width" : 244,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "10.29661016949153",
+          "largest" : "194",
+          "null" : 0,
+          "top" : [ {
+            "item" : "1",
+            "count" : 20
+          }, {
+            "item" : "0",
+            "count" : 19
+          }, {
+            "item" : "2",
+            "count" : 18
+          }, {
+            "item" : "12",
+            "count" : 17
+          }, {
+            "item" : "5",
+            "count" : 16
+          }, {
+            "item" : "4",
+            "count" : 15
+          }, {
+            "item" : "17",
+            "count" : 14
+          }, {
+            "item" : "11",
+            "count" : 13
+          }, {
+            "item" : "7",
+            "count" : 12
+          }, {
+            "item" : "8",
+            "count" : 11
+          }, {
+            "item" : "3",
+            "count" : 10
+          }, {
+            "item" : "6",
+            "count" : 9
+          }, {
+            "item" : "53",
+            "count" : 8
+          }, {
+            "item" : "183",
+            "count" : 7
+          }, {
+            "item" : "66",
+            "count" : 6
+          }, {
+            "item" : "39",
+            "count" : 5
+          }, {
+            "item" : "115",
+            "count" : 4
+          } ],
+          "smallest" : "0",
+          "sum" : "2430"
+        },
+        "format" : { }
+      }, {
+        "id" : 77010813,
+        "name" : "PERCENT FEMALE",
+        "dataTypeName" : "number",
+        "fieldName" : "percent_female",
+        "position" : 5,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501663,
+        "width" : 268,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "0.2439830508474576",
+          "largest" : "1",
+          "null" : 0,
+          "top" : [ {
+            "item" : "0.5",
+            "count" : 20
+          }, {
+            "item" : "1",
+            "count" : 19
+          }, {
+            "item" : "0",
+            "count" : 18
+          }, {
+            "item" : "0.33",
+            "count" : 17
+          }, {
+            "item" : "0.67",
+            "count" : 16
+          }, {
+            "item" : "0.13",
+            "count" : 15
+          }, {
+            "item" : "0.71",
+            "count" : 14
+          }, {
+            "item" : "0.63",
+            "count" : 13
+          }, {
+            "item" : "0.57",
+            "count" : 12
+          }, {
+            "item" : "0.8",
+            "count" : 11
+          }, {
+            "item" : "0.6",
+            "count" : 10
+          }, {
+            "item" : "0.56",
+            "count" : 9
+          }, {
+            "item" : "0.7",
+            "count" : 8
+          }, {
+            "item" : "0.55",
+            "count" : 7
+          }, {
+            "item" : "0.49",
+            "count" : 6
+          }, {
+            "item" : "0.43",
+            "count" : 5
+          }, {
+            "item" : "0.05",
+            "count" : 4
+          }, {
+            "item" : "0.09",
+            "count" : 3
+          }, {
+            "item" : "0.04",
+            "count" : 2
+          }, {
+            "item" : "0.46",
+            "count" : 1
+          } ],
+          "smallest" : "0",
+          "sum" : "57.58"
+        },
+        "format" : { }
+      }, {
+        "id" : 77010814,
+        "name" : "COUNT MALE",
+        "dataTypeName" : "number",
+        "fieldName" : "count_male",
+        "position" : 6,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501664,
+        "width" : 220,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "7.364406779661017",
+          "largest" : "157",
+          "null" : 0,
+          "top" : [ {
+            "item" : "22",
+            "count" : 20
+          }, {
+            "item" : "16",
+            "count" : 19
+          }, {
+            "item" : "0",
+            "count" : 18
+          }, {
+            "item" : "4",
+            "count" : 17
+          }, {
+            "item" : "1",
+            "count" : 16
+          }, {
+            "item" : "2",
+            "count" : 15
+          }, {
+            "item" : "7",
+            "count" : 14
+          }, {
+            "item" : "5",
+            "count" : 13
+          }, {
+            "item" : "10",
+            "count" : 12
+          }, {
+            "item" : "3",
+            "count" : 11
+          }, {
+            "item" : "9",
+            "count" : 10
+          }, {
+            "item" : "20",
+            "count" : 9
+          }, {
+            "item" : "27",
+            "count" : 8
+          }, {
+            "item" : "23",
+            "count" : 7
+          }, {
+            "item" : "26",
+            "count" : 6
+          }, {
+            "item" : "8",
+            "count" : 5
+          }, {
+            "item" : "41",
+            "count" : 4
+          }, {
+            "item" : "35",
+            "count" : 3
+          }, {
+            "item" : "19",
+            "count" : 2
+          }, {
+            "item" : "24",
+            "count" : 1
+          } ],
+          "smallest" : "0",
+          "sum" : "1738"
+        },
+        "format" : { }
+      }, {
+        "id" : 77010815,
+        "name" : "PERCENT MALE",
+        "dataTypeName" : "number",
+        "fieldName" : "percent_male",
+        "position" : 7,
+        "renderTypeName" : "number",
+        "tableColumnId" : 1501665,
+        "width" : 244,
+        "cachedContents" : {
+          "non_null" : 236,
+          "average" : "0.2010169491525424",
+          "largest" : "1",
+          "null" : 0,
+          "top" : [ {
+            "item" : "0.5",
+            "count" : 20
+          }, {
+            "item" : "0",
+            "count" : 19
+          }, {
+            "item" : "0.67",
+            "count" : 18
+          }, {
+            "item" : "1",
+            "count" : 17
+          }, {
+            "item" : "0.33",
+            "count" : 16
+          }, {
+            "item" : "0.88",
+            "count" : 15
+          }, {
+            "item" : "0.29",
+            "count" : 14
+          }, {
+            "item" : "0.37",
+            "count" : 13
+          }, {
+            "item" : "0.43",
+            "count" : 12
+          }, {
+            "item" : "0.2",
+            "count" : 11
+          }
+}
