@@ -1,8 +1,8 @@
 # QUESTION 1 : I downloaded file (uncased_L-12_H-768_A-12) to a directory (k). How do you run this file straight from git?
-cd ~/environments/k/
+cd ~/environments/k/Bert
 # A: You gotta download ethe entire repo
 
-conda activate p35
+conda activate p36
 # Dependnecies part 1
 pip install -U bert-serving-server bert-serving-client
 pip install tensorflow-gpu
