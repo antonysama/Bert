@@ -2,12 +2,14 @@
 cd ~/environments/k/
 # A: You gotta download ethe entire repo
 
+conda activate p35
 # Dependnecies part 1
 pip install -U bert-serving-server bert-serving-client
+pip install tensorflow-gpu
 bert-serving-start -model_dir=uncased_L-12_H-768_A-12
 
 # Dependency part 2: When you see "ready to serve client",start a new tab and install tf and then go to python
-pip install tensorflow-gpu
+
 
 # Optional: if you want  ELMo-like contextual word embedding set -pooling_strategy NONE as follows :
 # bert-serving-start -pooling_strategy NONE -model_dir=uncased_L-12_H-768_A-12
