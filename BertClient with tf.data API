@@ -26,7 +26,7 @@ from bert_serving.server import BertServer
 # QUESTION 2: How do these affect training?
 # A:Dimension of the input to LSTM is (Batch_size , timesteps, features or embedding dimension)
 # Optional: If you want embeddings that corresponds to every token, you can simply use slice index as follows:
-max_seq_len = 25
+max_seq_len = 12
 #pooling_strategy = NONE
 
 # QUESTION 3(same as question 1) can you open this file direct from git? 
@@ -43,7 +43,7 @@ str = data.replace("\'", "\"")
 # QUESTION 4.2 what is "os.environ['CUDA_VISIBLE_DEVICES'] below... ?
 # Process the following before making Bert Client furthe below
 
-batch_size = 256
+batch_size = 16
 num_parallel_calls = 2
 num_clients = 5  
 
