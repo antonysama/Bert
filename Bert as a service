@@ -1,7 +1,10 @@
 # Goal is to run Bert server & client. 
-pip install tensorflow-gpu
+#MUST be running on Python >= 3.5 with Tensorflow >= 1.1
+pip install tensorflow #one point ten, not 2.0
 pip install -U bert-serving-server bert-serving-client
-# After all installs run bert-serving-start -model_dir uncased_L-12_H-768_A-12 -num_worker=4
+#dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
+#(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
+bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=4 -pooling_strategy NONE -max_seq_len 20
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
 
 #Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
