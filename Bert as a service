@@ -4,12 +4,15 @@ pip install tensorflow #one point ten, not 2.0
 pip install bert-serving-client bert-serving-server -U
 #dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
 #(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
-bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=4 -pooling_strategy NONE -max_seq_len NONE -gpu
+bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=1 -pooling_strategy NONE -max_seq_len NONE pooling_layer -4 -3 -2 -1 -gpu
 #  you can send any sequence shorter than max_position_embeddings (usually 512) defined in bert.json.
 # Length restriction on server side is waived. You may also want to check the new argument 
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
-
+#to get the concatenated layers back.
+pooling_layers = np.split(embeddings_4321, 4, axis=0)
+#further to calculate mean used this:
+mean4321 = np.mean(pooling_layers, axis=0)
 #Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
 #https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity:
 
