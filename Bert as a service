@@ -1,10 +1,13 @@
 # Goal is to run Bert server & client. 
 #MUST be running on Python >= 3.5 with Tensorflow >= 1.1
 pip install tensorflow #one point ten, not 2.0
-pip install -U bert-serving-server bert-serving-client
+pip install bert-serving-client bert-serving-server -U
 #dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
 #(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
-bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=4 -pooling_strategy NONE -max_seq_len 20
+bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=4 -pooling_strategy NONE -max_seq_len NONE
+#  you can send any sequence shorter than max_position_embeddings (usually 512) defined in bert.json.
+# Length restriction on server side is waived. You may also want to check the new argument 
+#-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
 
 #Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
@@ -16,12 +19,19 @@ logging.getLogger("tensorflow").setLevel(logging.ERROR)
 import sys
 import tensorflow
 import numpy as np
-from bert_serving.server import BertServer
+from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
-
 bc = BertClient()
 bc.encode(['First do it', 'then do it right', 'then do it better'])
+
 #"Just encode! Don't even bother to batch, the server will take care of it."
+# prepare your sent in advance
+bc = BertClient()
+my_sentences = [s for s in my_corpus.iter()]
+# doing encoding in one-shot
+vec = bc.encode(my_sentences)
+#It will return a ndarray (or List[List[float]] if you wish),
+#in which each row is a fixed-length vector representing a sentence.
 
 from termcolor import colored
 from bert_serving.server.helper import get_run_args
