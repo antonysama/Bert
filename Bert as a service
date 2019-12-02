@@ -4,7 +4,8 @@ pip install tensorflow==1.10.0 #one point ten, not 2.0
 pip install bert-serving-client bert-serving-server -U
 #dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
 #(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
-bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -pooling_strategy NONE -max_seq_len NONE pooling_layer -4 -3 -2 -1 -gpu
+bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -pooling_strategy NONE 
+-max_seq_len NONE pooling_layer -4 -3 -2 -1 -gpu -show_tokens_to_client 
 #  you can send any sequence shorter than max_position_embeddings (usually 512) defined in bert.json.
 # Length restriction on server side is waived. You may also want to check the new argument 
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
