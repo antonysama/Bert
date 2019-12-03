@@ -1,11 +1,14 @@
 # Goal is to run Bert server & client. 
 #MUST be running on Python >= 3.5 with Tensorflow >= 1.1
-pip install tensorflow==1.10.0 #one point ten, not 2.0
+pip install tensorflow==1.10.0 #one point ten
 pip install bert-serving-client bert-serving-server -U
+pip install ftfy
+pip install nltk
 #dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
 #(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
-bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -pooling_strategy FIRST_TOKEN -show_tokens_to_client
--max_seq_len NONE pooling_layer -4 -3 -2 -1 -gpu  
+bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -show_tokens_to_client
+-max_seq_len 512 
+
 #  you can send any sequence shorter than max_position_embeddings (usually 512) defined in bert.json.
 # Length restriction on server side is waived. You may also want to check the new argument 
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
@@ -26,7 +29,33 @@ import numpy as np
 from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
 bc = BertClient()
+from nltk import tokenize
+from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
+
+
+def read_from_txt(filename):
+    if filename.endswith(".txt"):
+        with open(filename, 'r') as f:
+            return f.read()
+            
+def encode_n_pool(text, bertClient=bc):
+    sentences = tokenize.sent_tokenize(fix_text(text)) # split text by sentences and fix possible Unicode breaks
+    encoded = bertClient.encode(sentences)# encode sentences (returns numpy array of shape [num_sentences, 768])
+    encoded_mean = np.mean(encoded, axis=0) # compute mean along sentences (numpy array with len 768)
+    return encoded_mean
+ 
+#Alt text
+test_text = ''Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be  large. 
+However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors 
+
+text = read_from_txt('test.txt')
+encoding = encode_n_pool(text)
+encoding.head #(768,)            
+
+
+Bert  shows an example of a one-shot encoding here . But as you found out with the previous project.
+The one-shot encoding could need customization . I would like to see  such a customized version . As well,  the averaging of  vectors of the first sentences across paragraphs,- please.'''
 
 #"Just encode! Don't even bother to batch, the server will take care of it."
 # prepare your sent in advance
