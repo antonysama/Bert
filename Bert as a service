@@ -40,10 +40,10 @@ def read_from_txt(filename):
             return f.read()
             
 def encode_n_pool(text, bertClient=bc):
-    sentences = tokenize.sent_tokenize(fix_text(text)) # split text by sentences and fix possible Unicode breaks
-    encoded = bertClient.encode(sentences)# encode sentences (returns numpy array of shape [num_sentences, 768])
-    encoded_mean = np.mean(encoded, axis=0) # compute mean along sentences (numpy array with len 768)
-    return encoded_mean
+ sentences = tokenize.sent_tokenize(fix_text(text))
+ encoded = bertClient.encode(sentences)
+ encoded_mean = np.mean(encoded, axis=1) 
+ return encoded #encoded_mean
  
 #Alt text
 test_text = ''Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be  large. 
@@ -51,7 +51,7 @@ However, sentence vectors across paragraphs  can be pooled in ways that reduce t
 
 text = read_from_txt('test.txt')
 encoding = encode_n_pool(text)
-encoding.head #(768,)            
+encoding.shape #(768,)            
 
 
 Bert  shows an example of a one-shot encoding here . But as you found out with the previous project.
