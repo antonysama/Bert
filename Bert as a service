@@ -28,8 +28,7 @@ from nltk import tokenize
 from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
-text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be  large. 
-However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors'
+text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be large. However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors'
 
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
