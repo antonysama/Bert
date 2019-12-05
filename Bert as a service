@@ -76,3 +76,4 @@ from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+feat_cols = [ 'pixel'+str(i) for i in range(x.shape[1]) ]
