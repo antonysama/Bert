@@ -61,4 +61,17 @@ def encode_n_pool(text, bertClient=bc):
 text = read_from_txt('test.txt') # only if read_from_text is used ^
 
 encoding = encode_n_pool(text)
-encoding.shape #(768,)            
+encoding.shape #(768,)   
+
+x=encoding[:,0] #encoding is the mean encoding array taken along the embeddings (axis=1) . x.shape and y.shape = (3,) and (3,)
+y=encoding[:,1]
+
+#libraries
+from __future__ import print_function
+import pandas as pd
+from sklearn.decomposition import PCA
+%matplotlib inline
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import seaborn as sns
+
