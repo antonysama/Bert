@@ -33,6 +33,25 @@ from nltk import tokenize
 from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
+text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be  large. 
+However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors'
+
+def encode_n_pool(text, bertClient=bc):
+ sentences = tokenize.sent_tokenize(fix_text(text))
+ encoded = bertClient.encode(sentences)
+ return encoded #encoded_mean
+
+def encode_n_pool(text, bertClient=bc):
+ sentences = tokenize.sent_tokenize(fix_text(text))
+ encoded = bertClient.encode(sentences)
+ encoded_mean = np.mean(encoded, axis=1) 
+ return encoded #encoded_mean
+
+def encode_n_pool(text, bertClient=bc):
+ sentences = tokenize.sent_tokenize(fix_text(text))
+ encoded = bertClient.encode(sentences)
+ encoded_mean = np.mean(encoded, axis=0) 
+ return encoded #encoded_mean
 
 def read_from_txt(filename):
     if filename.endswith(".txt"):
@@ -45,11 +64,8 @@ def encode_n_pool(text, bertClient=bc):
  encoded_mean = np.mean(encoded, axis=1) 
  return encoded #encoded_mean
  
-#Alt text
-test_text = ''Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be  large. 
-However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors 
+text = read_from_txt('test.txt') # only if ^^ read_from_text is used
 
-text = read_from_txt('test.txt')
 encoding = encode_n_pool(text)
 encoding.shape #(768,)            
 
