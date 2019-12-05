@@ -13,14 +13,10 @@ bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_work
 # Length restriction on server side is waived. You may also want to check the new argument 
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
-#to get the concatenated layers back.
-pooling_layers = np.split(embeddings_4321, 4, axis=0)
-#further to calculate mean used this:
-mean4321 = np.mean(pooling_layers, axis=0)
-#Error: The name tf.logging.ERROR is deprecated. Please use tf.compat.v1.logging.ERROR instead (see below):
-#https://stackoverflow.com/questions/55081911/tensorflow-2-0-0-alpha0-tf-logging-set-verbosity:
 
-#on python run ...
+pip install bert-serving-client bert-serving-server -U
+
+#on python  ...
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 import sys
@@ -39,24 +35,24 @@ However, sentence vectors across paragraphs  can be pooled in ways that reduce t
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
  encoded = bertClient.encode(sentences)
- return encoded #encoded_mean
+ return encoded  
 
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
  encoded = bertClient.encode(sentences)
  encoded_mean = np.mean(encoded, axis=1) 
- return encoded #encoded_mean
+ return encoded_mean
 
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
  encoded = bertClient.encode(sentences)
  encoded_mean = np.mean(encoded, axis=0) 
- return encoded #encoded_mean
+ return encoded_mean
 
 def read_from_txt(filename):
     if filename.endswith(".txt"):
         with open(filename, 'r') as f:
-            return f.read()
+            return f.read() # only if reading txt file use V
             
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
@@ -64,58 +60,7 @@ def encode_n_pool(text, bertClient=bc):
  encoded_mean = np.mean(encoded, axis=1) 
  return encoded #encoded_mean
  
-text = read_from_txt('test.txt') # only if ^^ read_from_text is used
+text = read_from_txt('test.txt') # only if read_from_text is used ^
 
 encoding = encode_n_pool(text)
 encoding.shape #(768,)            
-
-
-Bert  shows an example of a one-shot encoding here . But as you found out with the previous project.
-The one-shot encoding could need customization . I would like to see  such a customized version . As well,  the averaging of  vectors of the first sentences across paragraphs,- please.'''
-
-#"Just encode! Don't even bother to batch, the server will take care of it."
-# prepare your sent in advance
-bc = BertClient()
-my_sentences = [s for s in my_corpus.iter()]
-# doing encoding in one-shot
-vec = bc.encode(my_sentences)
-#It will return a ndarray (or List[List[float]] if you wish),
-#in which each row is a fixed-length vector representing a sentence.
-
-from termcolor import colored
-from bert_serving.server.helper import get_run_args
-
-if __name__ == '__main__':
-    args = get_run_args()
-    server = BertServer(args)
-    server.start()
-    server.join()
-
-from termcolor import colored
-prefix_q = '##### **Q:** '
-topk = 5
-
-with open('README.md') as fp:
-    questions = [v.replace(prefix_q, '').strip() for v in fp if v.strip() and v.startswith(prefix_q)]
-    print('%d questions loaded, avg. len of %d' % (len(questions), np.mean([len(d.split()) for d in questions])))
-    
-with BertClient(ip='192.168.0.10') as bc:
-    doc_vecs = bc.encode(questions)
-
-    while True:
-        query = input(colored('your question: ', 'green'))
-        query_vec = bc.encode([query])[0]
-        # compute normalized dot product as score
-        score = np.sum(query_vec * doc_vecs, axis=1) / np.linalg.norm(doc_vecs, axis=1)
-        topk_idx = np.argsort(score)[::-1][:topk]
-        print('top %d questions similar to "%s"' % (topk, colored(query, 'green')))
-        for idx in topk_idx:
-            print('> %s\t%s' % (colored('%.1f' % score[idx], 'cyan'), colored(questions[idx], 'yellow')))
-
-
-# References:
-# Staring server & client: https://buildmedia.readthedocs.org/media/pdf/bert-as-service/latest/bert-as-service.pdf
-# Tutorials: https://github.com/antonysama/bert-as-service
-# ...more tutorials: https://bert-as-service.readthedocs.io/en/latest/tutorial/token-embed.html
-# Repo: https://github.com/google-research/bert
-# Examples: https://github.com/hanxiao/bert-as-service/blob/master/README.md
