@@ -66,12 +66,13 @@ encoding.shape #(768,)
 x=encoding[:,0] #encoding is the mean encoding array taken along the embeddings (axis=1) . x.shape and y.shape = (3,) and (3,)
 y=encoding[:,1]
 
-#libraries
-from __future__ import print_function
+#libraries on bash
+pip install --upgrade matplotlib
+pip install seaborn
+
+#on python
 import pandas as pd
 from sklearn.decomposition import PCA
-%matplotlib inline
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import seaborn as sns
 
