@@ -1,4 +1,3 @@
-# Goal is to run Bert server & client. 
 #MUST be running on Python >= 3.5 with Tensorflow >= 1.1
 pip install tensorflow==1.10.0 #one point ten
 pip install bert-serving-client bert-serving-server -U
