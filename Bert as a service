@@ -47,13 +47,17 @@ def read_from_txt(filename):
              
 text = read_from_txt('test.txt') # only if read_from_text is used ^
 
-encoding = encode_n_pool(text) # this would be X
-
-feat_cols = [ 'pixel'+str(i) for i in range(X.shape[1]) ]
-
-#random seed & plot of pca1 & 2:
+Xa...Xf = encode_n_pool(text) # this would be X
+X=np.column_stack([Xa,Xb,Xd,Xd])
+XT=X.T
+feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
+df = pd.DataFrame(X,columns=feat_cols)
 np.random.seed(42)  
 rndperm = np.random.permutation(df.shape[0])
+pca = PCA(n_components=3)
+pca_result = pca.fit_transform(df[feat_cols].values)df['pca-one'] = pca_result[:,0]
+df['pca-two'] = pca_result[:,1] 
+df['pca-three'] = pca_result[:,2]print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
 
 plt.figure(figsize=(16,10))
 sns.scatterplot(
