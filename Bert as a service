@@ -49,3 +49,17 @@ text = read_from_txt('test.txt') # only if read_from_text is used ^
 encoding = encode_n_pool(text) # this would be X
 
 feat_cols = [ 'pixel'+str(i) for i in range(X.shape[1]) ]
+
+#random seed & plot of pca1 & 2:
+np.random.seed(42)  
+rndperm = np.random.permutation(df.shape[0])
+
+plt.figure(figsize=(16,10))
+sns.scatterplot(
+    x="pca-one", y="pca-two",
+    palette=sns.color_palette("hls", 10),
+    data=df.loc[rndperm,:],
+    legend="full",
+    alpha=0.3
+	)
+plot.show()
