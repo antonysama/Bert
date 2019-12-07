@@ -37,7 +37,8 @@ text = 'Bert encodes a sentence by producing a vector array for each sentence. T
 def encode_n_pool(text, bertClient=bc):
  sentences = tokenize.sent_tokenize(fix_text(text))
  encoded = bertClient.encode(sentences)
- return encoded  
+ encoded_mean = np.mean(encoded, axis=1) 
+ return encoded_mean
 
 def read_from_txt(filename):
     if filename.endswith(".txt"):
