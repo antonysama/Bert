@@ -63,6 +63,15 @@ def encode_n_pool(text, bertClient=bc):
  return encoded_mean
              
 Xa...Xf = encode_n_pool(text) # ths would be X
+X1 = np.mean(df.iat[0,1], axis=0) 
+X2 = np.mean(df.iat[1,1], axis=0) 
+X3 = np.mean(df.iat[2,1], axis=0) 
+X4 = np.mean(df.iat[3,1], axis=0) 
+
+numbers = [1, 2, 3, 4]
+df['y'] = numbersdf['label'] = df['y'].apply(lambda i: str(i))
+
+
 
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
@@ -84,6 +93,7 @@ print('Explained variation per principal component: {}'.format(pca.explained_var
 plt.figure(figsize=(16,10))
 sns.scatterplot(
     x="pca-one", y="pca-two",
+    hue="y",
     palette=sns.color_palette("hls", 10),
     data=df.loc[rndperm,:],
     legend="full",
