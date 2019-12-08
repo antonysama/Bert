@@ -19,6 +19,7 @@ pip install bert-serving-client bert-serving-server -U
 import pandas as pd
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import seaborn as sns
 import logging
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
