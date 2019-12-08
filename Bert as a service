@@ -53,7 +53,7 @@ def encode_n_pool(text, bertClient=bc):
  encoded_mean = np.mean(encoded, axis=0) 
  return encoded_mean
 
-df[X]=encode_n_pool(df[[1]].values) or encode_n_pool (df.paragraph.values)
+df[X]=encode_n_pool(df[[1]].values) or encode_n_pool (df.paragraphs.values)
 
 def read_from_txt(filename):
     if filename.endswith(".txt"):
