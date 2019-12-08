@@ -72,8 +72,6 @@ X4 = np.mean(df.iat[3,1], axis=0)
 numbers = [1, 2, 3, 4]
 df['y'] = numbersdf['label'] = df['y'].apply(lambda i: str(i))
 
-
-
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
@@ -101,3 +99,11 @@ sns.scatterplot(
     alpha=0.3
 	)
 plot.show()
+
+ax = plt.figure(figsize=(16,10)).gca(projection='3d')
+ax.scatter(
+    xs=df.loc[rndperm,:]["pca-one"], 
+    ys=df.loc[rndperm,:]["pca-two"], 
+    zs=df.loc[rndperm,:]["pca-three"], 
+    cmap='tab10'
+)
