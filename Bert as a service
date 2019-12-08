@@ -40,11 +40,18 @@ def load_from_csv(file):
  df = df.rename(str.lower, axis='columns')
  df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
  df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
- df['encoded'] = df['paragraphs'].apply(lambda x: bertClient.encode(x))
+ return df
 
-return df
+def load_from_csv(file):
+    df = pd.read_csv(file)
+    df = df.rename(str.lower, axis='columns')
+    df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
+    df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
+    BertClient=bc
+    df['encoded'] = df['paragraphs'].apply(lambda x: BertClient.encode(x))
+    return df
 
-df = load_from_csv('./data/x.csv')
+df=load_from_csv('x.csv')
 
 df.head()
 text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be large. However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors. The number of hidden units is predefined. Each sentence is translated to a 768-dimensional vector. If you are using BERT model released by Google, then the number of hidden units is either 768 or 1024'
@@ -54,27 +61,25 @@ def encode_n_pool(text, bertClient=bc):
  encoded = bertClient.encode(sentences)
  encoded_mean = np.mean(encoded, axis=0) 
  return encoded_mean
-
-df[X]=encode_n_pool(df[[1]].values) or encode_n_pool (df.paragraphs.values)
-
-def read_from_txt(filename):
-    if filename.endswith(".txt"):
-        with open(filename, 'r') as f:
-            return f.read() # only if reading txt file use V
              
-text = read_from_txt('test.txt') # only if read_from_text is used ^
-
 Xa...Xf = encode_n_pool(text) # ths would be X
+
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
-df = pd.DataFrame(X,columns=feat_cols)
+
+df = pd.DataFrame(XT,columns=feat_cols)
+
 np.random.seed(42)  
 rndperm = np.random.permutation(df.shape[0])
 pca = PCA(n_components=3)
-pca_result = pca.fit_transform(df[feat_cols].values)df['pca-one'] = pca_result[:,0]
+pca_result = pca.fit_transform(df[feat_cols].values)
+
+df['pca-one'] = pca_result[:,0]
 df['pca-two'] = pca_result[:,1] 
-df['pca-three'] = pca_result[:,2]print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
+df['pca-three'] = pca_result[:,2]
+
+print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
 
 plt.figure(figsize=(16,10))
 sns.scatterplot(
