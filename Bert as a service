@@ -1,12 +1,13 @@
 #MUST be running on Python >= 3.5 with Tensorflow >= 1.1
+#dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
+#(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
+
 pip install tensorflow==1.10.0 #one point ten
 pip install bert-serving-client bert-serving-server -U
 pip install ftfy
 pip install nltk
 pip install --upgrade matplotlib
 pip install seaborn
-#dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
-#(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
 bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=NONE
  
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
