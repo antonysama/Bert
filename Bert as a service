@@ -36,13 +36,6 @@ from nltk import tokenize
 from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
-def load_from_csv(file):
- df = pd.read_csv(file)
- df = df.rename(str.lower, axis='columns')
- df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
- df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
- return df
-
 def load_from_csv(file):
     df = pd.read_csv(file)
     df = df.rename(str.lower, axis='columns')
@@ -53,23 +46,12 @@ def load_from_csv(file):
     return df
 
 df=load_from_csv('x.csv')
-
-df.head()
-text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be large. However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors. The number of hidden units is predefined. Each sentence is translated to a 768-dimensional vector. If you are using BERT model released by Google, then the number of hidden units is either 768 or 1024'
-
-def encode_n_pool(text, bertClient=bc):
- sentences = tokenize.sent_tokenize(fix_text(text))
- encoded = bertClient.encode(sentences)
- encoded_mean = np.mean(encoded, axis=0) 
- return encoded_mean
              
 Xa...Xf = encode_n_pool(text) # ths would be X
 X1 = np.mean(df.iat[0,1], axis=0) 
 X2 = np.mean(df.iat[1,1], axis=0) 
 X3 = np.mean(df.iat[2,1], axis=0) 
 X4 = np.mean(df.iat[3,1], axis=0) 
-
-
 
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
