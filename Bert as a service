@@ -36,6 +36,9 @@ from nltk import tokenize
 from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
+#Reading  paragraphs of text from csv file then and then encoding . 
+#File contains a column, with 4 rows of paragraphs from 4 news article.
+#Sentences per paragraph vary between 3 to 5. So vector dimensions vary from (768, 3) to (768, 5) 
 def load_from_csv(file):
     df = pd.read_csv(file)
     df = df.rename(str.lower, axis='columns')
@@ -47,22 +50,26 @@ def load_from_csv(file):
 
 df=load_from_csv('x.csv')
              
-Xa...Xf = encode_n_pool(text) # ths would be X
+# Flattening out t# Flattening out above encoded vectors. Each then becomes of dimension(768,) . 
 X1 = np.mean(df.iat[0,1], axis=0) 
 X2 = np.mean(df.iat[1,1], axis=0) 
 X3 = np.mean(df.iat[2,1], axis=0) 
 X4 = np.mean(df.iat[3,1], axis=0) 
 
+#Flattened vectors are stacked to make one vector X of size (768,4). X is transposed to (4,768), to better suit PCA model
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
+
+#Parameters of PCA
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
 df = pd.DataFrame(XT,columns=feat_cols)
 
+#Labels to identify the vectors when projected onto PCA 
 numbers = [1, 2, 3, 4]
 df['y'] = numbers
 df['label'] = df['y'].apply(lambda i: str(i))
 
-
+#PCA steps
 np.random.seed(42)  
 rndperm = np.random.permutation(df.shape[0])
 pca = PCA(n_components=3)
