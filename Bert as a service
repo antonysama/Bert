@@ -69,14 +69,17 @@ X2 = np.mean(df.iat[1,1], axis=0)
 X3 = np.mean(df.iat[2,1], axis=0) 
 X4 = np.mean(df.iat[3,1], axis=0) 
 
-numbers = [1, 2, 3, 4]
-df['y'] = numbersdf['label'] = df['y'].apply(lambda i: str(i))
+
 
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
-
 df = pd.DataFrame(XT,columns=feat_cols)
+
+numbers = [1, 2, 3, 4]
+df['y'] = numbers
+df['label'] = df['y'].apply(lambda i: str(i))
+
 
 np.random.seed(42)  
 rndperm = np.random.permutation(df.shape[0])
@@ -93,17 +96,25 @@ plt.figure(figsize=(16,10))
 sns.scatterplot(
     x="pca-one", y="pca-two",
     hue="y",
-    palette=sns.color_palette("hls", 10),
+    palette=sns.color_palette("hls", 4),
     data=df.loc[rndperm,:],
     legend="full",
     alpha=0.3
-	)
-plot.show()
+)
+plt.show()
 
 ax = plt.figure(figsize=(16,10)).gca(projection='3d')
 ax.scatter(
     xs=df.loc[rndperm,:]["pca-one"], 
     ys=df.loc[rndperm,:]["pca-two"], 
     zs=df.loc[rndperm,:]["pca-three"], 
+    c=df.loc[rndperm,:]["y"], 
     cmap='tab10'
 )
+ax.set_xlabel('pca-one')
+ax.set_ylabel('pca-two')
+ax.set_zlabel('pca-three')
+plt.show()
+
+ref:
+https://towardsdatascience.com/visualising-high-dimensional-datasets-using-pca-and-t-sne-in-python-8ef87e7915b
