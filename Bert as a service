@@ -24,6 +24,9 @@ logging.getLogger("tensorflow").setLevel(logging.ERROR)
 import sys
 import tensorflow
 import numpy as np
+import nltk
+nltk.download('punkt')
+from nltk import tokenize
 from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
 bc = BertClient()
@@ -31,6 +34,16 @@ from nltk import tokenize
 from ftfy import fix_text
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
+def load_from_csv(file):
+    df = pd.read_csv(file)
+    df = df.rename(str.lower, axis='columns')
+    df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
+    df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
+    return df
+
+df = load_from_csv('./data/test.csv')
+
+df.head()
 text = 'Bert encodes a sentence by producing a vector array for each sentence. The cumulative dimensions would be large. However, sentence vectors across paragraphs  can be pooled in ways that reduce the dimensions of vectors. The number of hidden units is predefined. Each sentence is translated to a 768-dimensional vector. If you are using BERT model released by Google, then the number of hidden units is either 768 or 1024'
 
 def encode_n_pool(text, bertClient=bc):
@@ -39,6 +52,8 @@ def encode_n_pool(text, bertClient=bc):
  encoded_mean = np.mean(encoded, axis=0) 
  return encoded_mean
 
+df[X]=encode_n_pool(df[[1]].values) or encode_n_pool (df.paragraph.values)
+
 def read_from_txt(filename):
     if filename.endswith(".txt"):
         with open(filename, 'r') as f:
@@ -46,7 +61,7 @@ def read_from_txt(filename):
              
 text = read_from_txt('test.txt') # only if read_from_text is used ^
 
-Xa...Xf = encode_n_pool(text) # this would be X
+Xa...Xf = encode_n_pool(text) # ths would be X
 X=np.column_stack([Xa,Xb,Xd,Xd])
 XT=X.T
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
