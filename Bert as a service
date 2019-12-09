@@ -55,40 +55,42 @@ X1 = np.mean(df.iat[0,1], axis=0)
 X2 = np.mean(df.iat[1,1], axis=0) 
 X3 = np.mean(df.iat[2,1], axis=0) 
 X4 = np.mean(df.iat[3,1], axis=0) 
+X5 = np.mean(df.iat[4,1], axis=0) 
+X6 = np.mean(df.iat[5,1], axis=0)
+X7 = np.mean(df.iat[6,1], axis=0)
+X8 = np.mean(df.iat[7,1], axis=0)
+X9 = np.mean(df.iat[8,1], axis=0)
+X10 = np.mean(df.iat[9,1], axis=0)
 
 #Flattened vectors are stacked to make one vector X of size (768,4). X is transposed to (4,768), to better suit PCA model
-X=np.column_stack([Xa,Xb,Xd,Xd])
+X=np.column_stack([X1,X2,X3,X4,X5,X6,X7,X8,X9,X10])
 XT=X.T
 
 #Parameters of PCA
 feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
 df = pd.DataFrame(XT,columns=feat_cols)
-
 #Labels to identify the vectors when projected onto PCA 
-numbers = [1, 2, 3, 4]
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 df['y'] = numbers
 df['label'] = df['y'].apply(lambda i: str(i))
-
 #PCA steps
 np.random.seed(42)  
 rndperm = np.random.permutation(df.shape[0])
 pca = PCA(n_components=3)
 pca_result = pca.fit_transform(df[feat_cols].values)
-
 df['pca-one'] = pca_result[:,0]
 df['pca-two'] = pca_result[:,1] 
 df['pca-three'] = pca_result[:,2]
-
 print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
 
 plt.figure(figsize=(16,10))
 sns.scatterplot(
     x="pca-one", y="pca-two",
     hue="y",
-    palette=sns.color_palette("hls", 4),
+    palette=sns.color_palette("hls", 10),
     data=df.loc[rndperm,:],
     legend="full",
-    alpha=0.3
+    alpha=1.2
 )
 plt.show()
 
