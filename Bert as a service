@@ -4,7 +4,7 @@
 
 pip install tensorflow==1.10.0 #one point ten
 pip install bert-serving-client bert-serving-server -U
-pip install ftfy
+#pip install ftfy
 pip install nltk
 pip install --upgrade matplotlib
 pip install seaborn
@@ -33,7 +33,8 @@ from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
 bc = BertClient()
 from nltk import tokenize
-from ftfy import fix_text
+#from ftfy import fix_text
+from sklearn.manifold import TSNE
 bc.encode(['First do it', 'then do it right', 'then do it better'])
 
 #Reading  paragraphs of text from csv file then and then encoding . 
@@ -107,5 +108,27 @@ ax.set_ylabel('pca-two')
 ax.set_zlabel('pca-three')
 plt.show()
 
+N=1000
+df_subset = df.loc[rndperm[:N],:].copy()
+data_subset = df_subset[feat_cols].values
+pca = PCA(n_components=3)
+pca_result = pca.fit_transform(data_subset)df_subset['pca-one'] = pca_result[:,0]
+df_subset['pca-two'] = pca_result[:,1] 
+df_subset['pca-three'] = pca_result[:,2]print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
+
+time_start = time.time()
+tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
+tsne_results = tsne.fit_transform(data_subset)print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
+
+df_subset['tsne-2d-one'] = tsne_results[:,0]
+df_subset['tsne-2d-two'] = tsne_results[:,1]plt.figure(figsize=(16,10))
+sns.scatterplot(
+    x="tsne-2d-one", y="tsne-2d-two",
+    hue="y",
+    palette=sns.color_palette("hls", 10),
+    data=df_subset,
+    legend="full",
+    alpha=0.3
+)
 ref:
 https://towardsdatascience.com/visualising-high-dimensional-datasets-using-pca-and-t-sne-in-python-8ef87e7915b
