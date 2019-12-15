@@ -5,9 +5,11 @@
 pip install tensorflow==1.10.0 #one point ten
 pip install bert-serving-client bert-serving-server -U
 #pip install ftfy
-pip install nltk
+pip install --upgrade nltk
 pip install --upgrade matplotlib
-pip install seaborn
+pip install --upgrade seaborn
+pip install --upgrade numpy as np
+pip install --upgrade pandas as pd
 bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=NONE
  
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
