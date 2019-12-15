@@ -93,7 +93,7 @@ sns.scatterplot(
     palette=sns.color_palette("hls", 10),
     data=df.loc[rndperm,:],
     legend="full",
-    alpha=1.2
+    alpha=1
 )
 plt.show()
 
