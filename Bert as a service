@@ -138,7 +138,7 @@ sns.scatterplot(
     palette=sns.color_palette("hls", 10),
     data=df_subset,
     legend="full",
-    alpha=0.3
+    alpha=1
 )
 
 ref:
