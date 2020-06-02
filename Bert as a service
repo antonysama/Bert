@@ -1,8 +1,9 @@
 #MUST be running on Python >= 3.5 with Tensorflow >= 1.1
 #dwnld and uncompress into say /tmp/english_L-12_H-768_A-12/ 
 #(from https://github.com/hanxiao/bert-as-service/blob/master/README.md#getting-started)
-
-pip install tensorflow==1.10.0 #one point ten
+conda activate p36
+pip install scikit-learn
+pip install tensorflow==1.14.0 #one point fourteen
 pip install bert-serving-client bert-serving-server -U
 #pip install ftfy
 pip install --upgrade nltk
@@ -17,8 +18,10 @@ bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_work
 
 pip install bert-serving-client bert-serving-server -U
 
+conda activate p36
 #on python  ...
 import pandas as pd
+import sklearn
 from sklearn.decomposition import PCA
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -30,7 +33,6 @@ import tensorflow
 import numpy as np
 import nltk
 nltk.download('punkt')
-from nltk import tokenize
 from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
 bc = BertClient()
@@ -39,9 +41,25 @@ time_start = time.time()
 tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
 tsne_results = tsne.fit_transform(data_subset)print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
 #from ftfy import fix_text
+import csv
 
 from sklearn.manifold import TSNE
 bc.encode(['First do it', 'then do it right', 'then do it better'])
+#or:
+metadata = ['First do it', 'then do it right', 'then do it better']
+df=bc.encode(metadata)
+
+with open('output2.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for d in df:
+      tsv_writer.writerow(X)
+ 
+ with open('output3.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for meta in metadata:
+      tsv_writer.writerow([meta])
+      
+output2 and output3 were uploaded to tensorflow embedded visualizer
 
 #Reading  paragraphs of text from csv file then and then encoding . 
 #File contains a column, with 4 rows of paragraphs from 4 news article.
@@ -51,7 +69,7 @@ def load_from_csv(file):
     df = df.rename(str.lower, axis='columns')
     df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
     df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
-    BertClient=bc
+    #BertClient=bc
     df['encoded'] = df['paragraphs'].apply(lambda x: BertClient.encode(x))
     return df
 
