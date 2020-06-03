@@ -70,7 +70,7 @@ def load_from_csv(file):
     df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
     df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
     #BertClient=bc
-    df['encoded'] = df['paragraphs'].apply(lambda x: BertClient.encode(x))
+    df['encoded'] = df['paragraphs'].apply(lambda x: bc.encode(x))
     return df
 
 df=load_from_csv('x.csv')
