@@ -11,7 +11,7 @@ pip install --upgrade matplotlib
 pip install --upgrade seaborn
 pip install --upgrade numpy as np
 pip install --upgrade pandas as pd
-bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=NONE
+bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=15
  
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
@@ -38,10 +38,10 @@ from bert_serving.client import BertClient
 bc = BertClient()
 from nltk import tokenize
 time_start = time.time()
-tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
-tsne_results = tsne.fit_transform(data_subset)print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
-#from ftfy import fix_text
 import csv
+#tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
+#tsne_results = tsne.fit_transform(data_subset)print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
+#from ftfy import fix_text
 
 from sklearn.manifold import TSNE
 bc.encode(['First do it', 'then do it right', 'then do it better'])
