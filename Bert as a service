@@ -39,27 +39,6 @@ bc = BertClient()
 from nltk import tokenize
 time_start = time.time()
 import csv
-#tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
-#tsne_results = tsne.fit_transform(data_subset)print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
-#from ftfy import fix_text
-
-from sklearn.manifold import TSNE
-bc.encode(['First do it', 'then do it right', 'then do it better'])
-#or:
-metadata = ['First do it', 'then do it right', 'then do it better']
-df=bc.encode(metadata)
-
-with open('output2.tsv', 'wt') as out_file:
-    tsv_writer = csv.writer(out_file, delimiter='\t')
-    for d in df:
-      tsv_writer.writerow(X)
- 
- with open('output3.tsv', 'wt') as out_file:
-    tsv_writer = csv.writer(out_file, delimiter='\t')
-    for meta in metadata:
-      tsv_writer.writerow([meta])
-      
-output2 and output3 were uploaded to tensorflow embedded visualizer
 
 #Reading  paragraphs of text from csv file then and then encoding . 
 #File contains a column, with 4 rows of paragraphs from 4 news article.
@@ -74,89 +53,39 @@ def load_from_csv(file):
 
 df=load_from_csv('x.csv')
              
-# Flattening out t# Flattening out above encoded vectors. Each then becomes of dimension(768,) . 
-X1 = np.mean(df.iat[0,1], axis=0) 
-X2 = np.mean(df.iat[1,1], axis=0) 
-X3 = np.mean(df.iat[2,1], axis=0) 
-X4 = np.mean(df.iat[3,1], axis=0) 
-X5 = np.mean(df.iat[4,1], axis=0) 
-X6 = np.mean(df.iat[5,1], axis=0)
-X7 = np.mean(df.iat[6,1], axis=0)
-X8 = np.mean(df.iat[7,1], axis=0)
-X9 = np.mean(df.iat[8,1], axis=0)
-X10 = np.mean(df.iat[9,1], axis=0)
+# embeddings
+embeddings = [i[0] for i in df['encoded']][1:]
 
-#Flattened vectors are stacked to make one vector X of size (768,4). X is transposed to (4,768), to better suit PCA model
-X=np.column_stack([X1,X2,X3,X4,X5,X6,X7,X8,X9,X10])
-XT=X.T
+with open('output32.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for e in embeddings:
+      tsv_writer.writerow(e)
 
-#Parameters of PCA
-feat_cols = [ 'pixel'+str(i) for i in range(XT.shape[1]) ]
-df = pd.DataFrame(XT,columns=feat_cols)
-#Labels to identify the vectors when projected onto PCA 
-numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-df['y'] = numbers
-df['label'] = df['y'].apply(lambda i: str(i))
-#PCA steps
-np.random.seed(42)  
-rndperm = np.random.permutation(df.shape[0])
-pca = PCA(n_components=3)
-pca_result = pca.fit_transform(df[feat_cols].values)
-df['pca-one'] = pca_result[:,0]
-df['pca-two'] = pca_result[:,1] 
-df['pca-three'] = pca_result[:,2]
-print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
+# labels
+metadata=df['paragraphs'].iloc[1:]
 
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="pca-one", y="pca-two",
-    hue="y",
-    palette=sns.color_palette("hls", 10),
-    data=df.loc[rndperm,:],
-    legend="full",
-    alpha=1
-)
-plt.show()
+with open('output33.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for meta in metadata:
+      tsv_writer.writerow([meta])
 
-ax = plt.figure(figsize=(16,10)).gca(projection='3d')
-ax.scatter(
-    xs=df.loc[rndperm,:]["pca-one"], 
-    ys=df.loc[rndperm,:]["pca-two"], 
-    zs=df.loc[rndperm,:]["pca-three"], 
-    c=df.loc[rndperm,:]["y"], 
-    cmap='tab10'
-)
-ax.set_xlabel('pca-one')
-ax.set_ylabel('pca-two')
-ax.set_zlabel('pca-three')
-plt.show()
+      
+output32 and output33 uploaded to tensorflow embedded visualizer
 
-N=1000
-df_subset = df.loc[rndperm[:N],:].copy()
-data_subset = df_subset[feat_cols].values
-pca = PCA(n_components=3)
-pca_result = pca.fit_transform(data_subset)
-df_subset['pca-one'] = pca_result[:,0]
-df_subset['pca-two'] = pca_result[:,1] 
-df_subset['pca-three'] = pca_result[:,2]
-print('Explained variation per principal component: {}'.format(pca.explained_variance_ratio_))
+#or:
+bc.encode(['First do it', 'then do it right', 'then do it better'])
 
-time_start = time.time()
-tsne = TSNE(n_components=2, verbose=1, perplexity=40, n_iter=300)
-tsne_results = tsne.fit_transform(data_subset)
-print('t-SNE done! Time elapsed: {} seconds'.format(time.time()-time_start))
+metadata = ['First do it', 'then do it right', 'then do it better']
+df=bc.encode(metadata)
 
-df_subset['tsne-2d-one'] = tsne_results[:,0]
-df_subset['tsne-2d-two'] = tsne_results[:,1]
-plt.figure(figsize=(16,10))
-sns.scatterplot(
-    x="tsne-2d-one", y="tsne-2d-two",
-    hue="y",
-    palette=sns.color_palette("hls", 10),
-    data=df_subset,
-    legend="full",
-    alpha=1
-)
-
+with open('output2.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for d in df:
+      tsv_writer.writerow(X)
+ 
+ with open('output3.tsv', 'wt') as out_file:
+    tsv_writer = csv.writer(out_file, delimiter='\t')
+    for meta in metadata:
+      tsv_writer.writerow([meta])
 ref:
 https://towardsdatascience.com/visualising-high-dimensional-datasets-using-pca-and-t-sne-in-python-8ef87e7915b
