@@ -44,27 +44,28 @@ import csv
 #File contains a column, with 4 rows of paragraphs from 4 news article.
 #Sentences per paragraph vary between 3 to 5. So vector dimensions vary from (768, 3) to (768, 5) 
 def load_from_csv(file):
-    df = pd.read_csv(file)
+    df = pd.read_csv(file, error_bad_lines=False, nrows=1000)
     df = df.rename(str.lower, axis='columns')
-    df['paragraphs'] = df['paragraphs'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
-    df['paragraphs'] = df['paragraphs'].apply(lambda x: tokenize.sent_tokenize(x))
-    df['encoded'] = df['paragraphs'].apply(lambda x: bc.encode(x))
+    df['title'] = df['title'].apply(lambda x: x.replace("'s", " " "s").replace("\n"," "))
+    df['title'] = df['title'].apply(lambda x: tokenize.sent_tokenize(x))
+    df['encoded'] = df['title'].apply(lambda x: bc.encode(x))
     return df
 
-df=load_from_csv('x.csv')
+df=load_from_csv('titlejson.csv')
              
 # embeddings
 embeddings = [i[0] for i in df['encoded']][1:]
 
-with open('output32.tsv', 'wt') as out_file:
+with open('tensor.tsv', 'wt') as out_file:
     tsv_writer = csv.writer(out_file, delimiter='\t')
     for e in embeddings:
       tsv_writer.writerow(e)
 
 # labels
-metadata=df['paragraphs'].iloc[1:]
+df['short_str'] = df['title'].str.slice(0,10)
+metadata=df['short_str'].iloc[1:]
 
-with open('output33.tsv', 'wt') as out_file:
+with open('metadata.tsv', 'wt') as out_file:
     tsv_writer = csv.writer(out_file, delimiter='\t')
     for meta in metadata:
       tsv_writer.writerow([meta])
