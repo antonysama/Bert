@@ -11,7 +11,7 @@ pip install --upgrade matplotlib
 pip install --upgrade seaborn
 pip install --upgrade numpy as np
 pip install --upgrade pandas as pd
-bert-serving-start -model_dir /home/antony/t2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=15
+bert-serving-start -model_dir /home/antony/t2.2/uncased_L-12_H-768_A-12/ -num_worker=1 -max_seq_len=15
  
 #-fixed_embed_length by bert-serving-start --help especially if you intend to use it as ELMo-like embedding.
 #(or run the below code, from the bert repo : python example8.py -model_dir=uncased_L-12_H-768_A-12)
@@ -36,12 +36,13 @@ nltk.download('punkt')
 from bert_serving.server import BertServer # still need this?
 from bert_serving.client import BertClient
 bc = BertClient()
-from nltk import tokenize
 time_start = time.time()
 import csv
+import nltk
+nltk.download('punkt')
+from nltk import tokenize
 
-#Reading  paragraphs of text from csv file then and then encoding . 
-#File contains a column, with 4 rows of paragraphs from 4 news article.
+#The following 'def' reads the the csv file and then encodes 
 #Sentences per paragraph vary between 3 to 5. So vector dimensions vary from (768, 3) to (768, 5) 
 def load_from_csv(file):
     df = pd.read_csv(file, error_bad_lines=False, nrows=1000)
@@ -53,9 +54,10 @@ def load_from_csv(file):
 
 df=load_from_csv('titlejson.csv')
              
-# embeddings
+# Creates a matrix of embeddings of above df file
 embeddings = [i[0] for i in df['encoded']][1:]
 
+#Produces a tsv file from above embedding
 with open('tensor.tsv', 'wt') as out_file:
     tsv_writer = csv.writer(out_file, delimiter='\t')
     for e in embeddings:
